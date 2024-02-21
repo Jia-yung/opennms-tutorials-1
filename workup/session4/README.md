@@ -15,4 +15,3 @@ event from ReST / Rester
 business service monitoring
 
 
-[Exercise-4-1](../session4/Exercise-4-1.md) creates an example event translator.
