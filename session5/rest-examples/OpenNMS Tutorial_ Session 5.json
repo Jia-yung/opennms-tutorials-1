@@ -1,0 +1,198 @@
+{
+  "name": "OpenNMS Tutorial: Session 5",
+  "version": "1",
+  "items": [
+    {
+      "type": "http",
+      "name": "Measurements - Node CPU Raw",
+      "seq": 1,
+      "request": {
+        "url": "http://localhost:8980/opennms/rest/measurements/node%5B6%5D.nodeSnmp%5B%5D/CpuRawUser?start=-7200000&maxrows=30&aggregation=AVERAGE",
+        "method": "GET",
+        "headers": [],
+        "body": {
+          "mode": "none",
+          "formUrlEncoded": [],
+          "multipartForm": []
+        },
+        "auth": {
+          "mode": "basic",
+          "basic": {
+            "username": "admin",
+            "password": "admin"
+          },
+          "bearer": {
+            "token": ""
+          }
+        },
+        "script": {},
+        "vars": {},
+        "assertions": [],
+        "tests": "",
+        "query": [
+          {
+            "name": "start",
+            "value": "-7200000",
+            "enabled": true
+          },
+          {
+            "name": "maxrows",
+            "value": "30",
+            "enabled": true
+          },
+          {
+            "name": "aggregation",
+            "value": "AVERAGE",
+            "enabled": true
+          }
+        ]
+      }
+    },
+    {
+      "type": "http",
+      "name": "Measurements complex",
+      "seq": 2,
+      "request": {
+        "url": "http://localhost:8980/opennms/rest/measurements",
+        "method": "POST",
+        "headers": [],
+        "body": {
+          "mode": "json",
+          "json": "{\n    \"start\": 1708560000000,\n    \"end\": 1708561728000,\n    \"step\": 10000,\n    \"maxrows\": 1600,\n    \"source\": [\n        {\n            \"aggregation\": \"AVERAGE\",\n            \"attribute\": \"ifHCInOctets\",\n            \"label\": \"ifHCInOctets\",\n            \"resourceId\": \"nodeSource[linux-server:linux-01].interfaceSnmp[eth0-0242c0a82a20]\",\n            \"transient\": \"false\" \n        },\n        {\n            \"aggregation\": \"AVERAGE\",\n            \"attribute\": \"ifHCOutOctets\",\n            \"label\": \"ifHCOutOctets\",\n            \"resourceId\": \"nodeSource[linux-server:linux-01].interfaceSnmp[eth0-0242c0a82a20]\",\n            \"transient\": \"true\" \n        }\n    ],\n    \"expression\": [\n        {\n            \"label\": \"ifHCOutOctetsNeg\",\n            \"value\": \"-1.0 * ifHCOutOctets\",\n            \"transient\": \"false\" \n        }\n    ]\n}",
+          "formUrlEncoded": [],
+          "multipartForm": []
+        },
+        "auth": {
+          "mode": "basic",
+          "basic": {
+            "username": "admin",
+            "password": "admin"
+          },
+          "bearer": {
+            "token": ""
+          }
+        },
+        "script": {},
+        "vars": {},
+        "assertions": [],
+        "tests": "",
+        "query": []
+      }
+    },
+    {
+      "type": "http",
+      "name": "Provision - Foreign Sources - Session5",
+      "seq": 3,
+      "request": {
+        "url": "http://localhost:8980/opennms/rest/foreignSources",
+        "method": "POST",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/xml",
+            "enabled": true
+          },
+          {
+            "name": "Accept",
+            "value": "application/xml",
+            "enabled": true
+          }
+        ],
+        "body": {
+          "mode": "xml",
+          "xml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<foreign-source xmlns=\"http://xmlns.opennms.org/xsd/config/foreign-source\" name=\"linux-server\">\n  <scan-interval>1d</scan-interval>\n  <detectors/>\n  <policies/>\n</foreign-source>",
+          "formUrlEncoded": [],
+          "multipartForm": []
+        },
+        "auth": {
+          "mode": "basic",
+          "basic": {
+            "username": "admin",
+            "password": "admin"
+          },
+          "bearer": {
+            "token": ""
+          }
+        },
+        "script": {},
+        "vars": {},
+        "assertions": [],
+        "tests": "",
+        "query": []
+      }
+    },
+    {
+      "type": "http",
+      "name": "Provision - Nodes - Session5",
+      "seq": 4,
+      "request": {
+        "url": "http://localhost:8980/opennms/rest/requisitions",
+        "method": "POST",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/xml",
+            "enabled": true
+          },
+          {
+            "name": "Accept",
+            "value": "application/xml",
+            "enabled": true
+          }
+        ],
+        "body": {
+          "mode": "xml",
+          "xml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<model-import xmlns=\"http://xmlns.opennms.org/xsd/config/model-import\" date-stamp=\"2024-02-12T10:50:02.025Z\" foreign-source=\"linux-server\" last-import=\"2024-02-12T10:51:29.354Z\">\n  <node location=\"Default\" foreign-id=\"linux-01\" node-label=\"linux-01\">\n    <interface ip-addr=\"192.168.42.32\" status=\"1\" snmp-primary=\"P\">\n      <monitored-service service-name=\"ICMP\"/>\n      <monitored-service service-name=\"SNMP\"/>\n    </interface>\n    <asset name=\"longitude\" value=\"9.1685303\"/>\n    <asset name=\"latitude\" value=\"48.8258763\"/>\n  </node>\n\n  <node location=\"Default\" foreign-id=\"linux-02\" node-label=\"linux-02\">\n    <interface ip-addr=\"192.168.42.33\" status=\"1\" snmp-primary=\"P\">\n      <monitored-service service-name=\"ICMP\"/>\n      <monitored-service service-name=\"SNMP\"/>\n    </interface>\n    <asset name=\"longitude\" value=\"9.1685303\"/>\n    <asset name=\"latitude\" value=\"48.8258763\"/>\n  </node>\n\n  <node location=\"Default\" foreign-id=\"linux-03\" node-label=\"linux-03\">\n    <interface ip-addr=\"192.168.42.34\" status=\"1\" snmp-primary=\"P\">\n      <monitored-service service-name=\"ICMP\"/>\n      <monitored-service service-name=\"SNMP\"/>\n    </interface>\n    <asset name=\"longitude\" value=\"9.1685303\"/>\n    <asset name=\"latitude\" value=\"48.8258763\"/>\n  </node>\n</model-import>",
+          "formUrlEncoded": [],
+          "multipartForm": []
+        },
+        "auth": {
+          "mode": "basic",
+          "basic": {
+            "username": "admin",
+            "password": "admin"
+          },
+          "bearer": {
+            "token": ""
+          }
+        },
+        "script": {},
+        "vars": {},
+        "assertions": [],
+        "tests": "",
+        "query": []
+      }
+    },
+    {
+      "type": "http",
+      "name": "Provision - Synchronize - Session5",
+      "seq": 5,
+      "request": {
+        "url": "http://localhost:8980/opennms/rest/requisitions/linux-server/import",
+        "method": "PUT",
+        "headers": [],
+        "body": {
+          "mode": "none",
+          "formUrlEncoded": [],
+          "multipartForm": []
+        },
+        "auth": {
+          "mode": "basic",
+          "basic": {
+            "username": "admin",
+            "password": "admin"
+          },
+          "bearer": {
+            "token": ""
+          }
+        },
+        "script": {},
+        "vars": {},
+        "assertions": [],
+        "tests": "",
+        "query": []
+      }
+    }
+  ],
+  "environments": []
+}

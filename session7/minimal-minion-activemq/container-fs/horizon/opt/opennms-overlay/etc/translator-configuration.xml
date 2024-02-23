@@ -143,33 +143,31 @@
          </mappings>
       </event-translation-spec>
 
-
       <!-- Translations FOR CAMERA CONTROLLER EVENTS -->
-      <event-translation-spec uei="uei.opennms.org/traps/CHUBB-TVBS-CAMERA-MIB/healthChange/panMotor">
+      <event-translation-spec uei="uei.opennms.org/traps/CHUBB-TVBS-CAMERA-MIB/healthChange">
          <mappings>
             <mapping preserve-snmp-data="false">
-            
-               <!-- you need to change this to look up the nodeid from the nodelabel -->
                <assignment name="nodeid" type="field">
-               <value type="constant" result="5" />
+                  <value type="sql" result="SELECT n.nodeid FROM node n  WHERE n.nodelabel = ? ">
+                     <value type="parameter" name=".1.3.6.1.4.1.52330.6.2.7.0" matches=".*" result="${0}" />
+                  </value>
                </assignment>
-
             </mapping>
          </mappings>
       </event-translation-spec>
 
-      <event-translation-spec uei="uei.opennms.org/traps/CHUBB-TVBS-CAMERA-MIB/healthChangeClear/panMotor-clear">
+      <event-translation-spec uei="uei.opennms.org/traps/CHUBB-TVBS-CAMERA-MIB/healthChangeClear">
          <mappings>
             <mapping preserve-snmp-data="false">
-            
-               <!-- you need to change this to look up the nodeid from the nodelabel -->
                <assignment name="nodeid" type="field">
-               <value type="constant" result="5" />
+                  <value type="sql" result="SELECT n.nodeid FROM node n  WHERE n.nodelabel = ? ">
+                     <value type="parameter" name=".1.3.6.1.4.1.52330.6.2.7.0" matches=".*" result="${0}" />
+                  </value>
                </assignment>
-
             </mapping>
          </mappings>
       </event-translation-spec>
+      
 
    </translation>
 
